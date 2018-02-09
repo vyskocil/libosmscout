@@ -58,7 +58,7 @@ namespace osmscout {
     {
         std::map<size_t,Font *>::const_iterator f;
 
-        fontSize=fontSize*projection.ConvertWidthToPixel(parameter.GetFontSize())*contentScale;
+        fontSize=fontSize*projection.ConvertWidthToPixel(parameter.GetFontSize());
 
         f=fonts.find(fontSize);
 
@@ -66,7 +66,7 @@ namespace osmscout {
             return f->second;
         }
 
-        Font *font = [Font fontWithName:[NSString stringWithUTF8String: parameter.GetFontName().c_str()] size:fontSize];
+        Font *font = [Font fontWithName:[NSString stringWithUTF8String: parameter.GetFontName().c_str()] size:fontSize*contentScale];
         return fonts.insert(std::pair<size_t,Font *>(fontSize,font)).first->second;
     }
 
