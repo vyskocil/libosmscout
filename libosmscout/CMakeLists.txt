@@ -1,4 +1,51 @@
 set(OSMSCOUT_BUILD_CORE ON CACHE INTERNAL "" FORCE)
+set(MARISA_FOUND 1)
+
+set(HEADER_FILES_ROOT
+    include/osmscout/CoreImportExport.h
+    include/osmscout/Area.h
+    include/osmscout/AreaAreaIndex.h
+    include/osmscout/AreaDataFile.h
+    include/osmscout/AreaNodeIndex.h
+    include/osmscout/AreaWayIndex.h
+    include/osmscout/CoordDataFile.h
+    include/osmscout/CoverageIndex.h
+    include/osmscout/BoundingBoxDataFile.h
+    include/osmscout/TypeDistributionDataFile.h
+    include/osmscout/Database.h
+    include/osmscout/DataFile.h
+    include/osmscout/ElevationService.h
+    include/osmscout/BasemapDatabase.h
+    include/osmscout/DebugDatabase.h
+    include/osmscout/GeoCoord.h
+    include/osmscout/GroundTile.h
+    include/osmscout/Intersection.h
+    include/osmscout/Location.h
+    include/osmscout/LocationIndex.h
+    include/osmscout/LocationService.h
+    include/osmscout/LocationDescriptionService.h
+    include/osmscout/Node.h
+    include/osmscout/NodeDataFile.h
+    include/osmscout/NumericIndex.h
+    include/osmscout/ObjectRef.h
+    include/osmscout/OptimizeAreasLowZoom.h
+    include/osmscout/OptimizeWaysLowZoom.h
+    include/osmscout/Path.h
+    include/osmscout/Pixel.h
+    include/osmscout/Point.h
+    include/osmscout/POIService.h
+    include/osmscout/ObjectVariantDataFile.h
+    include/osmscout/SRTM.h
+    include/osmscout/Tag.h
+    include/osmscout/TypeConfig.h
+    include/osmscout/TypeFeature.h
+    include/osmscout/TypeFeatures.h
+    include/osmscout/TypeInfoSet.h
+    include/osmscout/FeatureReader.h
+    include/osmscout/OSMScoutTypes.h
+    include/osmscout/WaterIndex.h
+    include/osmscout/Way.h
+    include/osmscout/WayDataFile.h)
 
 set(HEADER_FILES_OST
     include/osmscout/ost/Parser.h
@@ -76,55 +123,12 @@ set(HEADER_FILES_NAVIGATION
     include/osmscout/navigation/SpeedAgent.h)
 
 set(HEADER_FILES
+    ${HEADER_FILES_ROOT}
     ${HEADER_FILES_OST}
     ${HEADER_FILES_SYSTEM}
     ${HEADER_FILES_UTIL}
     ${HEADER_FILES_ROUTING}
-    ${HEADER_FILES_NAVIGATION}
-    include/osmscout/CoreImportExport.h
-    include/osmscout/Area.h
-    include/osmscout/AreaAreaIndex.h
-    include/osmscout/AreaDataFile.h
-    include/osmscout/AreaNodeIndex.h
-    include/osmscout/AreaWayIndex.h
-    include/osmscout/CoordDataFile.h
-    include/osmscout/CoverageIndex.h
-    include/osmscout/BoundingBoxDataFile.h
-    include/osmscout/TypeDistributionDataFile.h
-    include/osmscout/Database.h
-    include/osmscout/DataFile.h
-    include/osmscout/ElevationService.h
-    include/osmscout/BasemapDatabase.h
-    include/osmscout/DebugDatabase.h
-    include/osmscout/GeoCoord.h
-    include/osmscout/GroundTile.h
-    include/osmscout/Intersection.h
-    include/osmscout/Location.h
-    include/osmscout/LocationIndex.h
-    include/osmscout/LocationService.h
-    include/osmscout/LocationDescriptionService.h
-    include/osmscout/Node.h
-    include/osmscout/NodeDataFile.h
-    include/osmscout/NumericIndex.h
-    include/osmscout/ObjectRef.h
-    include/osmscout/OptimizeAreasLowZoom.h
-    include/osmscout/OptimizeWaysLowZoom.h
-    include/osmscout/Path.h
-    include/osmscout/Pixel.h
-    include/osmscout/Point.h
-    include/osmscout/POIService.h
-    include/osmscout/ObjectVariantDataFile.h
-    include/osmscout/SRTM.h
-    include/osmscout/Tag.h
-    include/osmscout/TypeConfig.h
-    include/osmscout/TypeFeature.h
-    include/osmscout/TypeFeatures.h
-    include/osmscout/TypeInfoSet.h
-    include/osmscout/FeatureReader.h
-    include/osmscout/OSMScoutTypes.h
-    include/osmscout/WaterIndex.h
-    include/osmscout/Way.h
-    include/osmscout/WayDataFile.h)
+    ${HEADER_FILES_NAVIGATION})
 
 set(SOURCE_FILES
     src/osmscout/ost/Parser.cpp
@@ -240,6 +244,21 @@ set_target_properties(OSMScout PROPERTIES
     CXX_STANDARD 14
 	OUTPUT_NAME "osmscout")
 
+set_source_files_properties(${HEADER_FILES_OST}
+        PROPERTIES MACOSX_PACKAGE_LOCATION Headers/ost)
+
+set_source_files_properties(${HEADER_FILES_SYSTEM}
+        PROPERTIES MACOSX_PACKAGE_LOCATION Headers/system)
+
+set_source_files_properties(${HEADER_FILES_UTIL}
+        PROPERTIES MACOSX_PACKAGE_LOCATION Headers/util)
+
+set_source_files_properties(${HEADER_FILES_ROUTING}
+        PROPERTIES MACOSX_PACKAGE_LOCATION Headers/routing)
+
+set_source_files_properties(${HEADER_FILES_NAVIGATION}
+        PROPERTIES MACOSX_PACKAGE_LOCATION Headers/navigation)
+
 target_include_directories(OSMScout PUBLIC include ${CMAKE_SOURCE_DIR}/include)
 
 # Public features Header
@@ -274,19 +293,9 @@ if(APPLE AND BUILD_FRAMEWORKS)
   FRAMEWORK_VERSION C
   MACOSX_FRAMEWORK_IDENTIFIER com.cmake.dynamicFramework
   #MACOSX_FRAMEWORK_INFO_PLIST Info.plist
-  PUBLIC_HEADER     "${HEADER_FILES}"
+  PUBLIC_HEADER     "${HEADER_FILES_ROOT}"
   CODE_ATTRIBUTE_CODE_SIGN_IDENTITY "iPhone Developer"
   OUTPUT_NAME "OSMScout")
-
-  set_property(SOURCE "${HEADER_FILES_OST}"
-          PROPERTY MACOSX_PACKAGE_LOCATION Headers/ost)
-  set_property(SOURCE "${HEADER_FILES_SYSTEM}"
-          PROPERTY MACOSX_PACKAGE_LOCATION Headers/system)
-  set_property(SOURCE "${HEADER_FILES_UTIL}"
-          PROPERTY MACOSX_PACKAGE_LOCATION Headers/util)
-  set_property(SOURCE "${HEADER_FILES_ROUTING}"
-          PROPERTY MACOSX_PACKAGE_LOCATION Headers/routing)
-
 endif()
 
 target_compile_definitions(OSMScout PRIVATE -DOSMSCOUT_EXPORT_SYMBOLS)
