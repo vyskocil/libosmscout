@@ -20,37 +20,37 @@ set(SOURCE_FILES
 )
 
 if(IOS)
-  add_library(OSMScoutMapCairo STATIC ${SOURCE_FILES} ${HEADER_FILES})
+  add_library(osmscout-map-cairo STATIC ${SOURCE_FILES} ${HEADER_FILES})
 else()
-  add_library(OSMScoutMapCairo ${SOURCE_FILES} ${HEADER_FILES})
+  add_library(osmscout-map-cairo ${SOURCE_FILES} ${HEADER_FILES})
 endif()
 
-set_target_properties(OSMScoutMapCairo PROPERTIES
+set_target_properties(osmscout-map-cairo PROPERTIES
 		CXX_STANDARD 14
 		OUTPUT_NAME "osmscout_map_cairo")
 
-target_include_directories(OSMScoutMapCairo PUBLIC
+target_include_directories(osmscout-map-cairo PUBLIC
 		${CMAKE_CURRENT_SOURCE_DIR}/include
 		${CAIRO_INCLUDE_DIRS}
 		${PNG_INCLUDE_DIRS})
 
 # Public features Header
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/include/osmscout/MapCairoFeatures.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/include/osmscout/MapCairoFeatures.h)
-target_include_directories(OSMScoutMapCairo PUBLIC include ${CMAKE_CURRENT_BINARY_DIR}/include)
+target_include_directories(osmscout-map-cairo PUBLIC include ${CMAKE_CURRENT_BINARY_DIR}/include)
 
 # Private config header
-create_private_config("${CMAKE_CURRENT_BINARY_DIR}/privateinclude/osmscout/private/Config.h" "OSMScoutMapCairo")
-target_include_directories(OSMScoutMapCairo PRIVATE include ${CMAKE_CURRENT_BINARY_DIR}/privateinclude)
+create_private_config("${CMAKE_CURRENT_BINARY_DIR}/privateinclude/osmscout/private/Config.h" "osmscout-map-cairo")
+target_include_directories(osmscout-map-cairo PRIVATE include ${CMAKE_CURRENT_BINARY_DIR}/privateinclude)
 
-target_link_libraries(OSMScoutMapCairo
-		OSMScout
-		OSMScoutMap
+target_link_libraries(osmscout-map-cairo
+		osmscout
+		osmscout-map
 		${CAIRO_LIBRARIES}
 		${PNG_LIBRARIES})
 
 if(PANGOCAIRO_FOUND)
-  target_include_directories(OSMScoutMapCairo PUBLIC ${PANGO_INCLUDE_DIRS})
-  target_link_libraries(OSMScoutMapCairo ${PANGO_LIBRARIES})
+  target_include_directories(osmscout-map-cairo PUBLIC ${PANGO_INCLUDE_DIRS})
+  target_link_libraries(osmscout-map-cairo ${PANGO_LIBRARIES})
 endif()
 
 if(${IOS})
@@ -58,19 +58,19 @@ if(${IOS})
 endif()
 
 if(APPLE AND BUILD_FRAMEWORKS)
-set_target_properties(OSMScoutMapCairo PROPERTIES
+set_target_properties(osmscout-map-cairo PROPERTIES
   		FRAMEWORK TRUE
   		FRAMEWORK_VERSION C
   		MACOSX_FRAMEWORK_IDENTIFIER com.cmake.dynamicFramework
   		#MACOSX_FRAMEWORK_INFO_PLIST Info.plist
   		PUBLIC_HEADER     "${HEADER_FILES}"
   		CODE_ATTRIBUTE_CODE_SIGN_IDENTITY "iPhone Developer"
-		OUTPUT_NAME "OSMScoutMapCairo")
+		OUTPUT_NAME "osmscout-map-cairo")
 endif()
 
-target_compile_definitions(OSMScoutMapCairo PRIVATE -DOSMSCOUT_MAP_CAIRO_EXPORT_SYMBOLS ${PNG_DEFINITIONS})
+target_compile_definitions(osmscout-map-cairo PRIVATE -DOSMSCOUT_MAP_CAIRO_EXPORT_SYMBOLS ${PNG_DEFINITIONS})
 
-install(TARGETS OSMScoutMapCairo
+install(TARGETS osmscout-map-cairo
         RUNTIME DESTINATION bin
         LIBRARY DESTINATION lib
         ARCHIVE DESTINATION lib

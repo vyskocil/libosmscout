@@ -22,31 +22,31 @@ set(SOURCE_FILES
 )
 
 if(IOS)
-  add_library(OSMScoutMapAGG STATIC ${SOURCE_FILES} ${HEADER_FILES})
+  add_library(osmscout-map-agg STATIC ${SOURCE_FILES} ${HEADER_FILES})
 else()
-  add_library(OSMScoutMapAGG ${SOURCE_FILES} ${HEADER_FILES})
+  add_library(osmscout-map-agg ${SOURCE_FILES} ${HEADER_FILES})
 endif()
 
-set_target_properties(OSMScoutMapAGG PROPERTIES
+set_target_properties(osmscout-map-agg PROPERTIES
 		CXX_STANDARD 14
 		OUTPUT_NAME "osmscout_map_agg")
 
-target_include_directories(OSMScoutMapAGG PUBLIC
+target_include_directories(osmscout-map-agg PUBLIC
 		${CMAKE_CURRENT_SOURCE_DIR}/include
 		${LIBAGG_INCLUDE_DIRS}
 		${FREETYPE_INCLUDE_DIRS})
 
 # Public features Header
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/include/osmscout/MapAggFeatures.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/include/osmscout/MapAggFeatures.h)
-target_include_directories(OSMScoutMapAGG PUBLIC include ${CMAKE_CURRENT_BINARY_DIR}/include)
+target_include_directories(osmscout-map-agg PUBLIC include ${CMAKE_CURRENT_BINARY_DIR}/include)
 
 # Private config header
-create_private_config("${CMAKE_CURRENT_BINARY_DIR}/privateinclude/osmscout/private/Config.h" "OSMScoutMapAGG")
-target_include_directories(OSMScoutMapAGG PRIVATE include ${CMAKE_CURRENT_BINARY_DIR}/privateinclude)
+create_private_config("${CMAKE_CURRENT_BINARY_DIR}/privateinclude/osmscout/private/Config.h" "osmscout-map-agg")
+target_include_directories(osmscout-map-agg PRIVATE include ${CMAKE_CURRENT_BINARY_DIR}/privateinclude)
 
-target_link_libraries(OSMScoutMapAGG
-		OSMScout
-		OSMScoutMap
+target_link_libraries(osmscout-map-agg
+		osmscout
+		osmscout-map
 		${LIBAGG_LIBRARIES}
 		${LIBAGGFT2_LIBRARIES}
 		${FREETYPE_LIBRARIES})
@@ -56,19 +56,19 @@ if(${IOS})
 endif()
 
 if(APPLE AND BUILD_FRAMEWORKS)
-set_target_properties(OSMScoutMapAGG PROPERTIES
+set_target_properties(osmscout-map-agg PROPERTIES
   		FRAMEWORK TRUE
   		FRAMEWORK_VERSION C
   		MACOSX_FRAMEWORK_IDENTIFIER com.cmake.dynamicFramework
   		#MACOSX_FRAMEWORK_INFO_PLIST Info.plist
   		PUBLIC_HEADER     "${HEADER_FILES}"
   		CODE_ATTRIBUTE_CODE_SIGN_IDENTITY "iPhone Developer"
-		OUTPUT_NAME "OSMScoutMapAGG")
+		OUTPUT_NAME "osmscout-map-agg")
 endif()
 
-target_compile_definitions(OSMScoutMapAGG PRIVATE -DOSMSCOUT_MAP_AGG_EXPORT_SYMBOLS)
+target_compile_definitions(osmscout-map-agg PRIVATE -DOSMSCOUT_MAP_AGG_EXPORT_SYMBOLS)
 
-install(TARGETS OSMScoutMapAGG
+install(TARGETS osmscout-map-agg
         RUNTIME DESTINATION bin
         LIBRARY DESTINATION lib
         ARCHIVE DESTINATION lib

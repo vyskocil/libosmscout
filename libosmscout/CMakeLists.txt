@@ -3,6 +3,7 @@ set(MARISA_FOUND 1)
 
 set(HEADER_FILES_ROOT
     include/osmscout/CoreImportExport.h
+    include/osmscout/CoreFeatures.h
     include/osmscout/Area.h
     include/osmscout/AreaAreaIndex.h
     include/osmscout/AreaDataFile.h
@@ -46,6 +47,10 @@ set(HEADER_FILES_ROOT
     include/osmscout/WaterIndex.h
     include/osmscout/Way.h
     include/osmscout/WayDataFile.h)
+
+if(MARISA_FOUND)
+    list(APPEND HEADER_FILES_ROOT include/osmscout/TextSearchIndex.h)
+endif()
 
 set(HEADER_FILES_OST
     include/osmscout/ost/Parser.h
@@ -230,17 +235,16 @@ set(SOURCE_FILES
     src/osmscout/util/CmdLineParsing.cpp)
 
 if(MARISA_FOUND)
-    list(APPEND HEADER_FILES include/osmscout/TextSearchIndex.h)
     list(APPEND SOURCE_FILES src/osmscout/TextSearchIndex.cpp)
 endif()
 
 if(IOS)
-  add_library(OSMScout STATIC ${SOURCE_FILES} ${HEADER_FILES})
+  add_library(osmscout STATIC ${SOURCE_FILES} ${HEADER_FILES})
 else()
-  add_library(OSMScout ${SOURCE_FILES} ${HEADER_FILES})
+  add_library(osmscout ${SOURCE_FILES} ${HEADER_FILES})
 endif()
 
-set_target_properties(OSMScout PROPERTIES
+set_target_properties(osmscout PROPERTIES
     CXX_STANDARD 14
 	OUTPUT_NAME "osmscout")
 
@@ -259,28 +263,28 @@ set_source_files_properties(${HEADER_FILES_ROUTING}
 set_source_files_properties(${HEADER_FILES_NAVIGATION}
         PROPERTIES MACOSX_PACKAGE_LOCATION Headers/navigation)
 
-target_include_directories(OSMScout PUBLIC include ${CMAKE_SOURCE_DIR}/include)
+target_include_directories(osmscout PUBLIC include ${CMAKE_SOURCE_DIR}/include)
 
 # Public features Header
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/include/osmscout/CoreFeatures.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/include/osmscout/CoreFeatures.h)
-target_include_directories(OSMScout PUBLIC include ${CMAKE_CURRENT_BINARY_DIR}/include)
+target_include_directories(osmscout PUBLIC include ${CMAKE_CURRENT_BINARY_DIR}/include)
 
 # Private config header
-create_private_config("${CMAKE_CURRENT_BINARY_DIR}/privateinclude/osmscout/private/Config.h" "OSMScout")
-target_include_directories(OSMScout PRIVATE include ${CMAKE_CURRENT_BINARY_DIR}/privateinclude)
+create_private_config("${CMAKE_CURRENT_BINARY_DIR}/privateinclude/osmscout/private/Config.h" "osmscout")
+target_include_directories(osmscout PRIVATE include ${CMAKE_CURRENT_BINARY_DIR}/privateinclude)
 
 if(MARISA_FOUND)
-    target_include_directories(OSMScout PUBLIC ${MARISA_INCLUDE_DIRS})
-    target_link_libraries(OSMScout ${MARISA_LIBRARIES})
+    target_include_directories(osmscout PUBLIC ${MARISA_INCLUDE_DIRS})
+    target_link_libraries(osmscout ${MARISA_LIBRARIES})
 endif()
 
 if (ICONV_FOUND)
-    target_include_directories(OSMScout PRIVATE ${ICONV_INCLUDE_DIRS})
-    target_link_libraries(OSMScout ${ICONV_LIBRARIES})
+    target_include_directories(osmscout PRIVATE ${ICONV_INCLUDE_DIRS})
+    target_link_libraries(osmscout ${ICONV_LIBRARIES})
 endif()
 
 if(CMAKE_THREAD_LIBS_INIT)
-  target_link_libraries(OSMScout ${CMAKE_THREAD_LIBS_INIT})
+  target_link_libraries(osmscout ${CMAKE_THREAD_LIBS_INIT})
 endif()
 
 if(${IOS})
@@ -288,18 +292,18 @@ if(${IOS})
 endif()
 
 if(APPLE AND BUILD_FRAMEWORKS)
-  set_target_properties(OSMScout PROPERTIES
+  set_target_properties(osmscout PROPERTIES
   FRAMEWORK TRUE
   FRAMEWORK_VERSION C
   MACOSX_FRAMEWORK_IDENTIFIER com.cmake.dynamicFramework
   #MACOSX_FRAMEWORK_INFO_PLIST Info.plist
   PUBLIC_HEADER     "${HEADER_FILES_ROOT}"
   CODE_ATTRIBUTE_CODE_SIGN_IDENTITY "iPhone Developer"
-  OUTPUT_NAME "OSMScout")
+  OUTPUT_NAME "osmscout")
 endif()
 
-target_compile_definitions(OSMScout PRIVATE -DOSMSCOUT_EXPORT_SYMBOLS)
-install(TARGETS OSMScout
+target_compile_definitions(osmscout PRIVATE -DOSMSCOUT_EXPORT_SYMBOLS)
+install(TARGETS osmscout
         RUNTIME DESTINATION bin
         LIBRARY DESTINATION lib
         ARCHIVE DESTINATION lib

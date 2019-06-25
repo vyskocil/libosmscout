@@ -35,16 +35,16 @@ set(SOURCE_FILES
 		src/poly2tri/sweep/advancing_front.cc)
 
 if(IOS)
-  add_library(OSMScoutMapOpenGL STATIC ${SOURCE_FILES} ${HEADER_FILES})
+  add_library(osmscout-map-opengl STATIC ${SOURCE_FILES} ${HEADER_FILES})
 else()
-  add_library(OSMScoutMapOpenGL ${SOURCE_FILES} ${HEADER_FILES})
+  add_library(osmscout-map-opengl ${SOURCE_FILES} ${HEADER_FILES})
 endif()
 
-set_target_properties(OSMScoutMapOpenGL PROPERTIES
+set_target_properties(osmscout-map-opengl PROPERTIES
 		CXX_STANDARD 14
-		OUTPUT_NAME "OSMScoutMapOpenGL")
+		OUTPUT_NAME "osmscout-map-opengl")
 
-target_include_directories(OSMScoutMapOpenGL PUBLIC
+target_include_directories(osmscout-map-opengl PUBLIC
 		${CMAKE_CURRENT_SOURCE_DIR}/include
 		${OPENGL_INCLUDE_DIR}
 		${GLEW_INCLUDE_DIRS}
@@ -53,40 +53,40 @@ target_include_directories(OSMScoutMapOpenGL PUBLIC
 
 # Public features Header
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/include/osmscout/MapOpenGLFeatures.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/include/osmscout/MapOpenGLFeatures.h)
-target_include_directories(OSMScoutMapOpenGL PUBLIC include ${CMAKE_CURRENT_BINARY_DIR}/include)
+target_include_directories(osmscout-map-opengl PUBLIC include ${CMAKE_CURRENT_BINARY_DIR}/include)
 
 # Private config header
-create_private_config("${CMAKE_CURRENT_BINARY_DIR}/privateinclude/osmscout/private/Config.h" "OSMScoutMapOpenGL")
-target_include_directories(OSMScoutMapOpenGL PRIVATE include ${CMAKE_CURRENT_BINARY_DIR}/privateinclude)
+create_private_config("${CMAKE_CURRENT_BINARY_DIR}/privateinclude/osmscout/private/Config.h" "osmscout-map-opengl")
+target_include_directories(osmscout-map-opengl PRIVATE include ${CMAKE_CURRENT_BINARY_DIR}/privateinclude)
 
 if(${IOS})
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fembed-bitcode")
 endif()
 
 if(APPLE AND BUILD_FRAMEWORKS)
-set_target_properties(OSMScoutMapOpenGL PROPERTIES
+set_target_properties(osmscout-map-opengl PROPERTIES
   		FRAMEWORK TRUE
   		FRAMEWORK_VERSION C
   		MACOSX_FRAMEWORK_IDENTIFIER com.cmake.dynamicFramework
   		#MACOSX_FRAMEWORK_INFO_PLIST Info.plist
   		PUBLIC_HEADER     "${HEADER_FILES}"
   		CODE_ATTRIBUTE_CODE_SIGN_IDENTITY "iPhone Developer"
-		OUTPUT_NAME "OSMScoutMapOpenGL")
+		OUTPUT_NAME "osmscout-map-opengl")
 endif()
 
 if(MSVS OR MSYS OR MINGW)
-	target_link_libraries(OSMScoutMapOpenGL
-			OSMScout
-			OSMScoutMap
+	target_link_libraries(osmscout-map-opengl
+			osmscout
+			osmscout-map
 			${OPENGL_LIBRARIES}
 			${PNG_LIBRARIES}
 			${FREETYPE_LIBRARIES}
 			glew32 # TODO: ${GLEW_LIBRARIES} is not setup correctly on Windows?
 			)
 else()
-	target_link_libraries(OSMScoutMapOpenGL
-			OSMScout
-			OSMScoutMap
+	target_link_libraries(osmscout-map-opengl
+			osmscout
+			osmscout-map
 			${OPENGL_LIBRARIES}
 			${GLEW_LIBRARIES}
 			${PNG_LIBRARIES}
@@ -94,9 +94,9 @@ else()
 			)
 endif()
 
-target_compile_definitions(OSMScoutMapOpenGL PRIVATE -DOSMSCOUT_MAP_OPENGL_EXPORT_SYMBOLS)
+target_compile_definitions(osmscout-map-opengl PRIVATE -DOSMSCOUT_MAP_OPENGL_EXPORT_SYMBOLS)
 
-install(TARGETS OSMScoutMapOpenGL
+install(TARGETS osmscout-map-opengl
 		RUNTIME DESTINATION bin
 		LIBRARY DESTINATION lib
 		ARCHIVE DESTINATION lib

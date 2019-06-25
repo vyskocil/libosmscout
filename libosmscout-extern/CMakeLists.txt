@@ -25,8 +25,8 @@ if(OSMSCOUT_BUILD_EXTERN_MATLAB)
       ${OSMSCOUT_BASE_DIR_SOURCE}/libosmscout-map-cairo/include
       ${CAIRO_INCLUDE_DIRS})
     target_link_libraries(osmscoutmx
-      OSMScoutMap
-      OSMScoutMapCairo
+      osmscout-map
+      osmscout-map-cairo
       ${CAIRO_LIBRARIES})
     target_compile_definitions(osmscoutmx PRIVATE -DOSMSCOUT_MAP_CAIRO)
   endif()

@@ -20,36 +20,36 @@ set(SOURCE_FILES
         src/osmscout-test/PreprocessOLT.cpp)
 
 if(IOS)
-  add_library(OSMScoutTest STATIC ${SOURCE_FILES} ${HEADER_FILES})
+  add_library(osmscout-test STATIC ${SOURCE_FILES} ${HEADER_FILES})
 else()
-  add_library(OSMScoutTest ${SOURCE_FILES} ${HEADER_FILES})
+  add_library(osmscout-test ${SOURCE_FILES} ${HEADER_FILES})
 endif()
 
-set_target_properties(OSMScoutTest PROPERTIES
+set_target_properties(osmscout-test PROPERTIES
         CXX_STANDARD 14
         OUTPUT_NAME "osmscout_test")
 
 set_source_files_properties(${HEADER_FILES_OLT}
         PROPERTIES MACOSX_PACKAGE_LOCATION Headers/ost)
 
-target_include_directories(OSMScoutTest PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
+target_include_directories(osmscout-test PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 # Public features Header
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/include/osmscout-test/TestFeatures.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/include/osmscout-test/TestFeatures.h)
-target_include_directories(OSMScoutTest PUBLIC include ${CMAKE_CURRENT_BINARY_DIR}/include)
+target_include_directories(osmscout-test PUBLIC include ${CMAKE_CURRENT_BINARY_DIR}/include)
 
 # Private config header
-create_private_config("${CMAKE_CURRENT_BINARY_DIR}/privateinclude/osmscout-test/private/Config.h" "OSMScoutTest")
-target_include_directories(OSMScoutTest PRIVATE include ${CMAKE_CURRENT_BINARY_DIR}/privateinclude)
+create_private_config("${CMAKE_CURRENT_BINARY_DIR}/privateinclude/osmscout-test/private/Config.h" "osmscout-test")
+target_include_directories(osmscout-test PRIVATE include ${CMAKE_CURRENT_BINARY_DIR}/privateinclude)
 
-target_link_libraries(OSMScoutTest OSMScout OSMScoutImport)
+target_link_libraries(osmscout-test osmscout osmscout-import)
 
 if(${IOS})
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fembed-bitcode")
 endif()
 
 if(APPLE AND BUILD_FRAMEWORKS)
-set_target_properties(OSMScoutTest PROPERTIES
+set_target_properties(osmscout-test PROPERTIES
         FRAMEWORK TRUE
         FRAMEWORK_VERSION C
         MACOSX_FRAMEWORK_IDENTIFIER com.cmake.dynamicFramework
@@ -59,9 +59,9 @@ set_target_properties(OSMScoutTest PROPERTIES
         OUTPUT_NAME "osmscout-test")
 endif()
 
-target_compile_definitions(OSMScoutTest PRIVATE -DOSMSCOUT_TEST_EXPORT_SYMBOLS)
+target_compile_definitions(osmscout-test PRIVATE -DOSMSCOUT_TEST_EXPORT_SYMBOLS)
 
-install(TARGETS OSMScoutTest
+install(TARGETS osmscout-test
         RUNTIME DESTINATION bin
         LIBRARY DESTINATION lib
         ARCHIVE DESTINATION lib

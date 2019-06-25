@@ -31,61 +31,61 @@ if(LIBXML2_FOUND)
 endif()
 
 if(IOS)
-  add_library(OSMScoutGPX STATIC ${SOURCE_FILES} ${HEADER_FILES})
+  add_library(osmscout-gpx STATIC ${SOURCE_FILES} ${HEADER_FILES})
 else()
-  add_library(OSMScoutGPX ${SOURCE_FILES} ${HEADER_FILES})
+  add_library(osmscout-gpx ${SOURCE_FILES} ${HEADER_FILES})
 endif()
 
-set_target_properties(OSMScoutGPX PROPERTIES
+set_target_properties(osmscout-gpx PROPERTIES
 		CXX_STANDARD 14
 		OUTPUT_NAME "osmscout_gpx")
 
-target_include_directories(OSMScoutGPX PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
+target_include_directories(osmscout-gpx PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 # Public features Header
 configure_file(include/osmscout/gpx/GPXFeatures.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/include/osmscout/gpx/GPXFeatures.h)
-target_include_directories(OSMScoutGPX PUBLIC include ${CMAKE_CURRENT_BINARY_DIR}/include)
+target_include_directories(osmscout-gpx PUBLIC include ${CMAKE_CURRENT_BINARY_DIR}/include)
 
 # Private config header
-create_private_config("${CMAKE_CURRENT_BINARY_DIR}/include/osmscout/private/Config.h" "OSMScoutGPX")
-target_include_directories(OSMScoutGPX PRIVATE include ${CMAKE_CURRENT_BINARY_DIR}/privateinclude)
+create_private_config("${CMAKE_CURRENT_BINARY_DIR}/include/osmscout/private/Config.h" "osmscout-gpx")
+target_include_directories(osmscout-gpx PRIVATE include ${CMAKE_CURRENT_BINARY_DIR}/privateinclude)
 
 if(LIBXML2_FOUND)
-    target_include_directories(OSMScoutGPX PRIVATE ${LIBXML2_INCLUDE_DIR})
-    target_link_libraries(OSMScoutGPX ${LIBXML2_LIBRARIES})
+    target_include_directories(osmscout-gpx PRIVATE ${LIBXML2_INCLUDE_DIR})
+    target_link_libraries(osmscout-gpx ${LIBXML2_LIBRARIES})
 
 # Looks like libxml2 has additional dependencies under Windows
 	if (ICONV_FOUND)
-		target_include_directories(OSMScoutGPX PRIVATE ${ICONV_INCLUDE_DIRS})
-		target_link_libraries(OSMScoutGPX ${ICONV_LIBRARIES})
+		target_include_directories(osmscout-gpx PRIVATE ${ICONV_INCLUDE_DIRS})
+		target_link_libraries(osmscout-gpx ${ICONV_LIBRARIES})
 	endif()
 
 	if (ZLIB_FOUND)
-		target_include_directories(OSMScoutGPX PRIVATE ${ZLIB_INCLUDE_DIRS})
-		target_link_libraries(OSMScoutGPX ${ZLIB_LIBRARIES})
+		target_include_directories(osmscout-gpx PRIVATE ${ZLIB_INCLUDE_DIRS})
+		target_link_libraries(osmscout-gpx ${ZLIB_LIBRARIES})
 	endif()
 endif()
 
-target_link_libraries(OSMScoutGPX OSMScout)
+target_link_libraries(osmscout-gpx osmscout)
 
 if(${IOS})
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fembed-bitcode")
 endif()
 
 if(APPLE AND BUILD_FRAMEWORKS)
-set_target_properties(OSMScoutGPX PROPERTIES
+set_target_properties(osmscout-gpx PROPERTIES
 		FRAMEWORK TRUE
 		FRAMEWORK_VERSION C
   		MACOSX_FRAMEWORK_IDENTIFIER com.cmake.dynamicFramework
   		#MACOSX_FRAMEWORK_INFO_PLIST Info.plist
   		PUBLIC_HEADER     "${HEADER_FILES}"
   		CODE_ATTRIBUTE_CODE_SIGN_IDENTITY "iPhone Developer"
-		OUTPUT_NAME "OSMScoutGPX")
+		OUTPUT_NAME "osmscout-gpx")
 endif()
 
-target_compile_definitions(OSMScoutGPX PRIVATE -DOSMSCOUT_GPX_EXPORT_SYMBOLS)
+target_compile_definitions(osmscout-gpx PRIVATE -DOSMSCOUT_GPX_EXPORT_SYMBOLS)
 
-install(TARGETS OSMScoutGPX
+install(TARGETS osmscout-gpx
         RUNTIME DESTINATION bin
         LIBRARY DESTINATION lib
         ARCHIVE DESTINATION lib

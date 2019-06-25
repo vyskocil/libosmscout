@@ -13,33 +13,33 @@ set(SOURCE_FILES
     src/osmscout/PathTextRenderer.cpp
 )
 
-add_library(OSMScoutMapDirectX SHARED ${SOURCE_FILES} ${HEADER_FILES})
+add_library(osmscout-map-directx SHARED ${SOURCE_FILES} ${HEADER_FILES})
 
-set_target_properties(OSMScoutMapDirectX PROPERTIES
+set_target_properties(osmscout-map-directx PROPERTIES
 		CXX_STANDARD 14
 		OUTPUT_NAME "osmscout_map_directx")
 
-target_include_directories(OSMScoutMapDirectX PUBLIC
+target_include_directories(osmscout-map-directx PUBLIC
 		${CMAKE_CURRENT_SOURCE_DIR}/include
 		${Direct2D_INCLUDE_DIRS})
 
 # Public features Header
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/include/osmscout/MapDirectXFeatures.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/include/osmscout/MapDirectXFeatures.h)
-target_include_directories(OSMScoutMapDirectX PUBLIC include ${CMAKE_CURRENT_BINARY_DIR}/include)
+target_include_directories(osmscout-map-directx PUBLIC include ${CMAKE_CURRENT_BINARY_DIR}/include)
 
 # Private config header
-create_private_config("${CMAKE_CURRENT_BINARY_DIR}/privateinclude/osmscout/private/Config.h" "OSMScoutMapDirectX")
-target_include_directories(OSMScoutMapDirectX PRIVATE include ${CMAKE_CURRENT_BINARY_DIR}/privateinclude)
+create_private_config("${CMAKE_CURRENT_BINARY_DIR}/privateinclude/osmscout/private/Config.h" "osmscout-map-directx")
+target_include_directories(osmscout-map-directx PRIVATE include ${CMAKE_CURRENT_BINARY_DIR}/privateinclude)
 
-target_link_libraries(OSMScoutMapDirectX
-		OSMScout
-		OSMScoutMap
+target_link_libraries(osmscout-map-directx
+		osmscout
+		osmscout-map
 		${Direct2D_LIBRARIES}
 		Windowscodecs)
 
-target_compile_definitions(OSMScoutMapDirectX PRIVATE -DOSMSCOUT_MAP_DIRECTX_EXPORT_SYMBOLS -DUNICODE -D_UNICODE)
+target_compile_definitions(osmscout-map-directx PRIVATE -DOSMSCOUT_MAP_DIRECTX_EXPORT_SYMBOLS -DUNICODE -D_UNICODE)
 
-install(TARGETS OSMScoutMapDirectX
+install(TARGETS osmscout-map-directx
         RUNTIME DESTINATION bin
         LIBRARY DESTINATION lib
         ARCHIVE DESTINATION lib)

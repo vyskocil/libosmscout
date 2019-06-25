@@ -15,29 +15,29 @@ set(SOURCE_FILES
 )
 
 if(IOS)
-  add_library(OSMScoutMapIOSX STATIC ${SOURCE_FILES} ${HEADER_FILES})
+  add_library(osmscout-map-iosx STATIC ${SOURCE_FILES} ${HEADER_FILES})
 else()
-  add_library(OSMScoutMapIOSX ${SOURCE_FILES} ${HEADER_FILES})
+  add_library(osmscout-map-iosx ${SOURCE_FILES} ${HEADER_FILES})
 endif()
 
-set_target_properties(OSMScoutMapIOSX PROPERTIES
+set_target_properties(osmscout-map-iosx PROPERTIES
 		CXX_STANDARD 14
 		OUTPUT_NAME "osmscout-map-iosx")
 
-target_include_directories(OSMScoutMapIOSX PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
+target_include_directories(osmscout-map-iosx PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 # Private config header
-create_private_config("${CMAKE_CURRENT_BINARY_DIR}/privateinclude/osmscout/private/Config.h" "OSMScoutMapIOSX")
-target_include_directories(OSMScoutMapIOSX PRIVATE include ${CMAKE_CURRENT_BINARY_DIR}/privateinclude)
+create_private_config("${CMAKE_CURRENT_BINARY_DIR}/privateinclude/osmscout/private/Config.h" "osmscout-map-iosx")
+target_include_directories(osmscout-map-iosx PRIVATE include ${CMAKE_CURRENT_BINARY_DIR}/privateinclude)
 
-set_target_properties(OSMScoutMapIOSX PROPERTIES
+set_target_properties(osmscout-map-iosx PROPERTIES
   FRAMEWORK TRUE
   FRAMEWORK_VERSION C
   MACOSX_FRAMEWORK_IDENTIFIER com.cmake.dynamicFramework
   #MACOSX_FRAMEWORK_INFO_PLIST Info.plist
   PUBLIC_HEADER     include/osmscout/MapPainterIOS.h
   CODE_ATTRIBUTE_CODE_SIGN_IDENTITY "iPhone Developer"
-  OUTPUT_NAME "OSMScoutMapIOSX")
+  OUTPUT_NAME "osmscout-map-iosx")
 
 find_library(FOUNDATION Foundation)
 find_library(COREGRAPHICS CoreGraphics)
@@ -46,9 +46,9 @@ find_library(CORETEXT CoreText)
 if(${IOS})
 find_library(UIKIT UIKit)
 
-target_link_libraries(OSMScoutMapIOSX
-		OSMScout
-		OSMScoutMap
+target_link_libraries(osmscout-map-iosx
+		osmscout
+		osmscout-map
 		${FOUNDATION}
 		${UIKIT}
 		${CORETEXT}
@@ -57,9 +57,9 @@ else()
 find_library(COCOA Cocoa)
 find_library(APPKIT AppKit)
 
-target_link_libraries(OSMScoutMapIOSX
-		OSMScout
-		OSMScoutMap
+target_link_libraries(osmscout-map-iosx
+		osmscout
+		osmscout-map
 		${FOUNDATION}
 		${COCOA}
 		${APPKIT}
@@ -73,9 +73,9 @@ else()
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fobjc-arc")
 endif()
 
-target_compile_definitions(OSMScoutMapIOSX PRIVATE -DOSMSCOUTMAPIOSX_EXPORT_SYMBOLS)
+target_compile_definitions(osmscout-map-iosx PRIVATE -DOSMSCOUTMAPIOSX_EXPORT_SYMBOLS)
 
-install(TARGETS OSMScoutMapIOSX
+install(TARGETS osmscout-map-iosx
         RUNTIME DESTINATION bin
         LIBRARY DESTINATION lib
         ARCHIVE DESTINATION lib

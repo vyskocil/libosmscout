@@ -62,15 +62,15 @@ set(RESOURCE_FILES
 add_executable(StyleEditor ${SOURCE_FILES} ${HEADER_FILES} ${RESOURCE_FILES})
 
 target_link_libraries(StyleEditor
-	OSMScout
-		OSMScoutMap
+		osmscout
+		osmscout-map
 		Qt5::Core
 		Qt5::Gui
 		Qt5::Widgets
 		Qt5::Qml
 		Qt5::Quick
-		OSMScoutMapQt
-		OSMScoutClientQt
+		osmscout-map-qt
+		osmscout-client-qt
 )
 
 if (Qt5Svg_FOUND)

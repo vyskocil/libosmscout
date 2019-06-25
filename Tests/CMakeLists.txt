@@ -2,51 +2,51 @@
 add_executable(AccessParse src/AccessParse.cpp)
 set_property(TARGET AccessParse PROPERTY CXX_STANDARD 14)
 target_include_directories(AccessParse PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
-target_link_libraries(AccessParse OSMScout)
+target_link_libraries(AccessParse osmscout)
 add_test(NAME AccessParse COMMAND AccessParse)
 
 #---- Bearing
 add_executable(Bearing src/Bearing.cpp)
 set_property(TARGET Bearing PROPERTY CXX_STANDARD 14)
 target_include_directories(Bearing PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
-target_link_libraries(Bearing OSMScout)
+target_link_libraries(Bearing osmscout)
 add_test(NAME Bearing COMMAND Bearing)
 
 #---- BitsAndBytesNeeded
 add_executable(BitsAndBytesNeeded src/BitsAndBytesNeeded.cpp)
 set_property(TARGET BitsAndBytesNeeded PROPERTY CXX_STANDARD 14)
 target_include_directories(BitsAndBytesNeeded PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
-target_link_libraries(BitsAndBytesNeeded OSMScout)
+target_link_libraries(BitsAndBytesNeeded osmscout)
 add_test(NAME BitsAndBytesNeeded COMMAND BitsAndBytesNeeded)
 
 #---- CachePerformance
 add_executable(CachePerformance src/CachePerformance.cpp)
 set_property(TARGET CachePerformance PROPERTY CXX_STANDARD 14)
-target_link_libraries(CachePerformance OSMScout)
+target_link_libraries(CachePerformance osmscout)
 
 #---- CalculateResolution
 add_executable(CalculateResolution src/CalculateResolution.cpp)
 set_property(TARGET CalculateResolution PROPERTY CXX_STANDARD 14)
-target_link_libraries(CalculateResolution OSMScout)
+target_link_libraries(CalculateResolution osmscout)
 
 #---- CmdLineParsing
 add_executable(CmdLineParsing src/CmdLineParsing.cpp)
 set_property(TARGET CmdLineParsing PROPERTY CXX_STANDARD 14)
 target_include_directories(CmdLineParsing PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
-target_link_libraries(CmdLineParsing OSMScout)
+target_link_libraries(CmdLineParsing osmscout)
 add_test(NAME CmdLineParsing COMMAND CmdLineParsing)
 
 #---- ColorParse
 add_executable(ColorParse src/ColorParse.cpp)
 set_property(TARGET ColorParse PROPERTY CXX_STANDARD 14)
 target_include_directories(ColorParse PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
-target_link_libraries(ColorParse OSMScout)
+target_link_libraries(ColorParse osmscout)
 add_test(NAME ColorParse COMMAND ColorParse)
 
 #---- CoordinateEncoding
 add_executable(CoordinateEncoding src/CoordinateEncoding.cpp)
 set_property(TARGET CoordinateEncoding PROPERTY CXX_STANDARD 14)
-target_link_libraries(CoordinateEncoding OSMScout)
+target_link_libraries(CoordinateEncoding osmscout)
 # TODO: add sample data and arguments to test
 #add_test(NAME CoordinateEncoding COMMAND CoordinateEncoding)
 
@@ -54,24 +54,24 @@ target_link_libraries(CoordinateEncoding OSMScout)
 add_executable(LocationLookupTest src/SearchForLocationByStringTest.cpp src/SearchForLocationByFormTest.cpp src/SearchForPOIByFormTest.cpp src/LocationServiceTest.cpp)
 target_include_directories(LocationLookupTest PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
 set_property(TARGET LocationLookupTest PROPERTY CXX_STANDARD 14)
-target_link_libraries(LocationLookupTest OSMScoutTest OSMScoutImport OSMScout)
+target_link_libraries(LocationLookupTest osmscout-test osmscout-import osmscout)
 add_test(NAME LocationLookupTest COMMAND LocationLookupTest)
 set_tests_properties(LocationLookupTest PROPERTIES ENVIRONMENT TESTS_TOP_DIR=${CMAKE_CURRENT_SOURCE_DIR})
 
 #---- NumberSetPerformance
 add_executable(NumberSetPerformance src/NumberSetPerformance.cpp)
 set_property(TARGET NumberSetPerformance PROPERTY CXX_STANDARD 14)
-target_link_libraries(NumberSetPerformance OSMScout)
+target_link_libraries(NumberSetPerformance osmscout)
 
 #---- ReaderScannerPerformance
 add_executable(ReaderScannerPerformance src/ReaderScannerPerformance.cpp)
 set_property(TARGET ReaderScannerPerformance PROPERTY CXX_STANDARD 14)
-target_link_libraries(ReaderScannerPerformance OSMScout)
+target_link_libraries(ReaderScannerPerformance osmscout)
 
 #---- MultiDBRouting
 add_executable(MultiDBRouting src/MultiDBRouting.cpp)
 set_property(TARGET MultiDBRouting PROPERTY CXX_STANDARD 14)
-target_link_libraries(MultiDBRouting OSMScout)
+target_link_libraries(MultiDBRouting osmscout)
 # TODO: add sample data and arguments to test
 #add_test(NAME  COMMAND )
 
@@ -79,7 +79,7 @@ target_link_libraries(MultiDBRouting OSMScout)
 if(${OSMSCOUT_BUILD_MAP})
 	add_executable(ThreadedDatabase src/ThreadedDatabase.cpp)
 	set_property(TARGET ThreadedDatabase PROPERTY CXX_STANDARD 14)
-    target_link_libraries(ThreadedDatabase OSMScout OSMScoutMap)
+    target_link_libraries(ThreadedDatabase osmscout osmscout-map)
   # TODO: add sample data and arguments to test
   #add_test(NAME  COMMAND )
 else()
@@ -93,7 +93,7 @@ if(${OSMSCOUT_BUILD_MAP_QT})
   add_executable(DrawTextQt ${src_files})
   set_property(TARGET DrawTextQt PROPERTY CXX_STANDARD 14)
   target_include_directories(DrawTextQt PRIVATE include ${CMAKE_CURRENT_BINARY_DIR})
-  target_link_libraries(DrawTextQt OSMScout OSMScoutMap OSMScoutMapQt Qt5::Widgets)
+  target_link_libraries(DrawTextQt osmscout osmscout-map osmscout-map-qt Qt5::Widgets)
 else()
   message("Skip DrawTextQt test, libosmscout-map-qt is missing.")
 endif()
@@ -101,21 +101,21 @@ endif()
 #---- Geometry
 add_executable(Geometry src/Geometry.cpp)
 set_property(TARGET Geometry PROPERTY CXX_STANDARD 14)
-target_link_libraries(Geometry OSMScout)
+target_link_libraries(Geometry osmscout)
 target_include_directories(Geometry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
 add_test(NAME Geometry COMMAND Geometry)
 
 #---- WorkQueue
 add_executable(WorkQueue src/WorkQueue.cpp)
 set_property(TARGET WorkQueue PROPERTY CXX_STANDARD 14)
-target_link_libraries(WorkQueue OSMScout)
+target_link_libraries(WorkQueue osmscout)
 add_test(NAME WorkQueue COMMAND WorkQueue)
 
 #---- MapRotate
 if(${OSMSCOUT_BUILD_MAP})
   add_executable(MapRotate src/MapRotate.cpp)
   set_property(TARGET MapRotate PROPERTY CXX_STANDARD 14)
-  target_link_libraries(MapRotate OSMScout OSMScoutMap)
+  target_link_libraries(MapRotate osmscout osmscout-map)
   add_test(NAME MapRotate COMMAND MapRotate)
 else()
 	message("Skip MapRotate test, libosmscout-map is missing.")
@@ -124,72 +124,72 @@ endif()
 #---- EncodeNumber
 add_executable(EncodeNumber src/EncodeNumber.cpp)
 set_property(TARGET EncodeNumber PROPERTY CXX_STANDARD 14)
-target_link_libraries(EncodeNumber OSMScout)
+target_link_libraries(EncodeNumber osmscout)
 add_test(NAME EncodeNumber COMMAND EncodeNumber)
 
 #---- FileScannerWriter
 add_executable(FileScannerWriter src/FileScannerWriter.cpp)
 set_property(TARGET FileScannerWriter PROPERTY CXX_STANDARD 14)
-target_link_libraries(FileScannerWriter OSMScout)
+target_link_libraries(FileScannerWriter osmscout)
 add_test(NAME FileScannerWriter COMMAND FileScannerWriter)
 
 #---- GeoCoordParse
 add_executable(GeoCoordParse src/GeoCoordParse.cpp)
 set_property(TARGET GeoCoordParse PROPERTY CXX_STANDARD 14)
-target_link_libraries(GeoCoordParse OSMScout)
+target_link_libraries(GeoCoordParse osmscout)
 add_test(NAME GeoCoordParse COMMAND GeoCoordParse)
 
 #---- NumberSet
 add_executable(NumberSet src/NumberSet.cpp)
 set_property(TARGET NumberSet PROPERTY CXX_STANDARD 14)
-target_link_libraries(NumberSet OSMScout)
+target_link_libraries(NumberSet osmscout)
 add_test(NAME NumberSet COMMAND NumberSet)
 
 #---- ScanConversion
 add_executable(ScanConversion src/ScanConversion.cpp)
 set_property(TARGET ScanConversion PROPERTY CXX_STANDARD 14)
 target_include_directories(ScanConversion PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
-target_link_libraries(ScanConversion OSMScout)
+target_link_libraries(ScanConversion osmscout)
 add_test(NAME ScanConversion COMMAND ScanConversion)
 
 #---- StringUtils
 add_executable(StringUtils src/StringUtils.cpp)
 set_property(TARGET StringUtils PROPERTY CXX_STANDARD 14)
 target_include_directories(StringUtils PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
-target_link_libraries(StringUtils OSMScout)
+target_link_libraries(StringUtils osmscout)
 add_test(NAME StringUtils COMMAND StringUtils)
 
 #---- TilingTest
 add_executable(TilingTest src/TilingTest.cpp)
 set_property(TARGET TilingTest PROPERTY CXX_STANDARD 14)
 target_include_directories(TilingTest PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
-target_link_libraries(TilingTest OSMScout)
+target_link_libraries(TilingTest osmscout)
 add_test(NAME TilingTest COMMAND TilingTest)
 
 #---- TimeParse
 add_executable(TimeParse src/TimeParse.cpp)
 set_property(TARGET TimeParse PROPERTY CXX_STANDARD 14)
 target_include_directories(TimeParse PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
-target_link_libraries(TimeParse OSMScout)
+target_link_libraries(TimeParse osmscout)
 add_test(NAME TimeParse COMMAND TimeParse)
 
 #---- WStringStringConversion
 add_executable(WStringStringConversion src/WStringStringConversion.cpp)
 set_property(TARGET WStringStringConversion PROPERTY CXX_STANDARD 14)
-target_link_libraries(WStringStringConversion OSMScout)
+target_link_libraries(WStringStringConversion osmscout)
 add_test(NAME WStringStringConversion COMMAND WStringStringConversion)
 
 #---- TransPolygon
 add_executable(TransPolygon src/TransPolygon.cpp include/TestWay.h)
 set_property(TARGET TransPolygon PROPERTY CXX_STANDARD 14)
 target_include_directories(TransPolygon PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
-target_link_libraries(TransPolygon OSMScout)
+target_link_libraries(TransPolygon osmscout)
 add_test(NAME TransPolygon COMMAND TransPolygon)
 
 #---- TransPolygon
 add_executable(GeoBox src/GeoBox.cpp)
 set_property(TARGET GeoBox PROPERTY CXX_STANDARD 14)
-target_link_libraries(GeoBox OSMScout)
+target_link_libraries(GeoBox osmscout)
 target_include_directories(GeoBox PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
 add_test(NAME GeoBox COMMAND GeoBox)
 
@@ -197,7 +197,7 @@ add_test(NAME GeoBox COMMAND GeoBox)
 if(${OSMSCOUT_BUILD_MAP})
   add_executable(OSTAndOSSCheck src/OSTAndOSSCheck.cpp)
   set_property(TARGET OSTAndOSSCheck PROPERTY CXX_STANDARD 14)
-  target_link_libraries(OSTAndOSSCheck OSMScout OSMScoutMap)
+  target_link_libraries(OSTAndOSSCheck osmscout osmscout-map)
 
   set(STYLESHEETS
           standard.oss
@@ -223,7 +223,7 @@ if(${OSMSCOUT_BUILD_MAP})
   add_executable(LabelPathTest src/LabelPathTest.cpp)
   set_property(TARGET LabelPathTest PROPERTY CXX_STANDARD 14)
   target_include_directories(LabelPathTest PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
-  target_link_libraries(LabelPathTest OSMScout OSMScoutMap)
+  target_link_libraries(LabelPathTest osmscout osmscout-map)
   add_test(NAME LabelPathTest COMMAND LabelPathTest)
 else()
   message("Skip LabelPathTest, libosmscout-map is missing.")
@@ -232,14 +232,14 @@ endif()
 #---- Base64
 add_executable(Base64 src/Base64.cpp)
 set_property(TARGET Base64 PROPERTY CXX_STANDARD 14)
-target_link_libraries(Base64 OSMScout)
+target_link_libraries(Base64 osmscout)
 target_include_directories(Base64 PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
 add_test(NAME Base64 COMMAND Base64)
 
 #---- CoordBufferTest
 add_executable(CoordBufferTest src/CoordBufferTest.cpp)
 set_property(TARGET CoordBufferTest PROPERTY CXX_STANDARD 14)
-target_link_libraries(CoordBufferTest OSMScout OSMScoutMap)
+target_link_libraries(CoordBufferTest osmscout osmscout-map)
 target_include_directories(CoordBufferTest PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
 add_test(NAME CoordBufferTest COMMAND CoordBufferTest)
 
@@ -250,7 +250,7 @@ if(${OSMSCOUT_BUILD_CLIENT_QT})
   add_executable(ClientQtThreading ${src_files})
   set_property(TARGET ClientQtThreading PROPERTY CXX_STANDARD 14)
   target_include_directories(ClientQtThreading PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include ${CMAKE_CURRENT_BINARY_DIR})
-  target_link_libraries(ClientQtThreading OSMScout OSMScoutMap OSMScoutMapQt OSMScoutClientQt Qt5::Widgets)
+  target_link_libraries(ClientQtThreading osmscout osmscout-map osmscout-map-qt osmscout-client-qt Qt5::Widgets)
 else()
   message("Skip ClientQtThreading test, libosmscout-client-qt is missing.")
 endif()

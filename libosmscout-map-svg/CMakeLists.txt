@@ -12,48 +12,48 @@ set(SOURCE_FILES
 )
 
 if(IOS)
-  add_library(OSMScoutMapSVG STATIC ${SOURCE_FILES} ${HEADER_FILES})
+  add_library(osmscout-map-svg STATIC ${SOURCE_FILES} ${HEADER_FILES})
 else()
-  add_library(OSMScoutMapSVG ${SOURCE_FILES} ${HEADER_FILES})
+  add_library(osmscout-map-svg ${SOURCE_FILES} ${HEADER_FILES})
 endif()
 
-set_target_properties(OSMScoutMapSVG PROPERTIES
+set_target_properties(osmscout-map-svg PROPERTIES
         CXX_STANDARD 14
         OUTPUT_NAME "osmscout_map_svg")
 
-target_include_directories(OSMScoutMapSVG PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
+target_include_directories(osmscout-map-svg PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 # Public features Header
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/include/osmscout/MapSVGFeatures.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/include/osmscout/MapSVGFeatures.h)
-target_include_directories(OSMScoutMapSVG PUBLIC include ${CMAKE_CURRENT_BINARY_DIR}/include)
+target_include_directories(osmscout-map-svg PUBLIC include ${CMAKE_CURRENT_BINARY_DIR}/include)
 
 # Private config header
-create_private_config("${CMAKE_CURRENT_BINARY_DIR}/privateinclude/osmscout/private/Config.h" "OSMScoutMapSVG")
-target_include_directories(OSMScoutMapSVG PRIVATE include ${CMAKE_CURRENT_BINARY_DIR}/privateinclude)
+create_private_config("${CMAKE_CURRENT_BINARY_DIR}/privateinclude/osmscout/private/Config.h" "osmscout-map-svg")
+target_include_directories(osmscout-map-svg PRIVATE include ${CMAKE_CURRENT_BINARY_DIR}/privateinclude)
 
 if(APPLE AND BUILD_FRAMEWORKS)
-    set_target_properties(OSMScoutMapSVG PROPERTIES
+    set_target_properties(osmscout-map-svg PROPERTIES
             FRAMEWORK TRUE
             FRAMEWORK_VERSION C
             MACOSX_FRAMEWORK_IDENTIFIER com.cmake.dynamicFramework
             #MACOSX_FRAMEWORK_INFO_PLIST Info.plist
             PUBLIC_HEADER     "${HEADER_FILES}"
             CODE_ATTRIBUTE_CODE_SIGN_IDENTITY "iPhone Developer"
-            OUTPUT_NAME "OSMScoutMapSVG")
+            OUTPUT_NAME "osmscout-map-svg")
 endif()
 
-target_link_libraries(OSMScoutMapSVG
-		OSMScout
-		OSMScoutMap)
+target_link_libraries(osmscout-map-svg
+		osmscout
+		osmscout-map)
 
 if(PANGOFT2_FOUND)
-  target_include_directories(OSMScoutMapSVG PUBLIC ${PANGOFT2_INCLUDE_DIRS})
-  target_link_libraries(OSMScoutMapSVG ${PANGOFT2_LIBRARIES})
+  target_include_directories(osmscout-map-svg PUBLIC ${PANGOFT2_INCLUDE_DIRS})
+  target_link_libraries(osmscout-map-svg ${PANGOFT2_LIBRARIES})
 endif()
 
-target_compile_definitions(OSMScoutMapSVG PRIVATE -DOSMSCOUT_MAP_SVG_EXPORT_SYMBOLS)
+target_compile_definitions(osmscout-map-svg PRIVATE -DOSMSCOUT_MAP_SVG_EXPORT_SYMBOLS)
 
-install(TARGETS OSMScoutMapSVG
+install(TARGETS osmscout-map-svg
         RUNTIME DESTINATION bin
         LIBRARY DESTINATION lib
         ARCHIVE DESTINATION lib

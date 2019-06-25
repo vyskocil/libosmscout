@@ -15,49 +15,49 @@ set(SOURCE_FILES
 )
 
 if(IOS)
-  add_library(OSMScoutMapQt STATIC ${SOURCE_FILES} ${HEADER_FILES})
+  add_library(osmscout-map-qt STATIC ${SOURCE_FILES} ${HEADER_FILES})
 else()
-  add_library(OSMScoutMapQt ${SOURCE_FILES} ${HEADER_FILES})
+  add_library(osmscout-map-qt ${SOURCE_FILES} ${HEADER_FILES})
 endif()
 
-set_target_properties(OSMScoutMapQt PROPERTIES
+set_target_properties(osmscout-map-qt PROPERTIES
 		CXX_STANDARD 14
 		OUTPUT_NAME "osmscout_map_qt")
 
-target_include_directories(OSMScoutMapQt PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
+target_include_directories(osmscout-map-qt PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 # Public features Header
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/include/osmscout/MapQtFeatures.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/include/osmscout/MapQtFeatures.h)
-target_include_directories(OSMScoutMapQt PUBLIC include ${CMAKE_CURRENT_BINARY_DIR}/include)
+target_include_directories(osmscout-map-qt PUBLIC include ${CMAKE_CURRENT_BINARY_DIR}/include)
 
 # Private config header
-create_private_config("${CMAKE_CURRENT_BINARY_DIR}/privateinclude/osmscout/private/Config.h" "OSMScoutMapQt")
-target_include_directories(OSMScoutMapQt PRIVATE include ${CMAKE_CURRENT_BINARY_DIR}/privateinclude)
+create_private_config("${CMAKE_CURRENT_BINARY_DIR}/privateinclude/osmscout/private/Config.h" "osmscout-map-qt")
+target_include_directories(osmscout-map-qt PRIVATE include ${CMAKE_CURRENT_BINARY_DIR}/privateinclude)
 
 if(${IOS})
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fembed-bitcode")
 endif()
 
 if(APPLE AND BUILD_FRAMEWORKS)
-set_target_properties(OSMScoutMapQt PROPERTIES
+set_target_properties(osmscout-map-qt PROPERTIES
   		FRAMEWORK TRUE
   		FRAMEWORK_VERSION C
   		MACOSX_FRAMEWORK_IDENTIFIER com.cmake.dynamicFramework
   		#MACOSX_FRAMEWORK_INFO_PLIST Info.plist
   		PUBLIC_HEADER     "${HEADER_FILES}"
   		CODE_ATTRIBUTE_CODE_SIGN_IDENTITY "iPhone Developer"
-		OUTPUT_NAME "OSMScoutMapQt")
+		OUTPUT_NAME "osmscout-map-qt")
 endif()
 
-target_link_libraries(OSMScoutMapQt
-		OSMScout
-		OSMScoutMap
+target_link_libraries(osmscout-map-qt
+		osmscout
+		osmscout-map
 		Qt5::Gui
 		Qt5::Svg)
 
-target_compile_definitions(OSMScoutMapQt PRIVATE -DOSMSCOUT_MAP_QT_EXPORT_SYMBOLS)
+target_compile_definitions(osmscout-map-qt PRIVATE -DOSMSCOUT_MAP_QT_EXPORT_SYMBOLS)
 
-install(TARGETS OSMScoutMapQt
+install(TARGETS osmscout-map-qt
         RUNTIME DESTINATION bin
         LIBRARY DESTINATION lib
         ARCHIVE DESTINATION lib
