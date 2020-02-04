@@ -233,6 +233,7 @@ namespace osmscout {
 
   typedef FeatureValueReader<NameFeature,NameFeatureValue>                         NameFeatureValueReader;
   typedef FeatureValueReader<NameAltFeature,NameAltFeatureValue>                   NameAltFeatureValueReader;
+  typedef FeatureValueReader<NameShortFeature,NameShortFeatureValue>                   NameShortFeatureValueReader;
   typedef FeatureValueReader<RefFeature,RefFeatureValue>                           RefFeatureValueReader;
   typedef FeatureValueReader<LocationFeature,LocationFeatureValue>                 LocationFeatureValueReader;
   typedef FeatureValueReader<AddressFeature,AddressFeatureValue>                   AddressFeatureValueReader;
