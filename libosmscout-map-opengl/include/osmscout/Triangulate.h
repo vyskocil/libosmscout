@@ -22,7 +22,7 @@
 
 #include <GL/glew.h>
 #include <iostream>
-#include <osmscout/MapPainter.h>
+#include <osmscoutmap/MapPainter.h>
 #include <glm/vec3.hpp>
 
 namespace osmscout{

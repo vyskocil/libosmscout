@@ -30,7 +30,7 @@
 #include <Windows.h>
 
 #include <osmscout/MapGDIImportExport.h>
-#include <osmscout/MapPainter.h>
+#include <osmscoutmap/MapPainter.h>
 
 namespace osmscout {
 

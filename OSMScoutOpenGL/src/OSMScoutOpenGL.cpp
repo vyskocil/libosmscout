@@ -22,7 +22,7 @@
 #include <future>
 #include <chrono>
 #include <osmscout/Database.h>
-#include <osmscout/MapService.h>
+#include <osmscoutmap/MapService.h>
 #include <osmscout/MapPainterOpenGL.h>
 #include <osmscout/util/CmdLineParsing.h>
 #include <osmscout/util/Logger.h>
